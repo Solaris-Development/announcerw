@@ -24,7 +24,7 @@ const router = createBrowserRouter(
       <Route path="/verification" element={<Stage0 />}/>
       <Route path="/verification/stage1" element={<Stage1 />}/>
     </>
-  )
+  ), { basename: import.meta.env.DEV ? '/' : '/announcerw/' }
 );
 
 
