@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Stage1() {
     const [loaded, setLoaded] = useState(false);
-    const [isLoading, _setLoading] = useState(false);
+    const [isLoading, setLoading] = useState(false);
     const [err, setErr] = useState(false);
     const [user, setUser] = useState<any>();
     const redirect = useNavigate()
