@@ -1,7 +1,6 @@
 import { Button } from "@/Components/ui/button";
 import { Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function generateRandomString() {
 	let randomString = '';

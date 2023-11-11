@@ -3,21 +3,19 @@ import { Button } from "@/Components/ui/button";
 import {
     AlertDialog,
     AlertDialogAction,
-    AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from "@/Components/ui/alert-dialog"
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Stage1() {
     const [loaded, setLoaded] = useState(false);
-    const [isLoading, setLoading] = useState(false);
+    const [isLoading, _setLoading] = useState(false);
     const [err, setErr] = useState(false);
     const [user, setUser] = useState<any>();
     const redirect = useNavigate()
