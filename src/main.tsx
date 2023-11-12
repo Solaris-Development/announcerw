@@ -14,6 +14,8 @@ import Terms from './Terms';
 import Privacy from './Privacy';
 import Stage0 from './Verification/Stage0';
 import Stage1 from './Verification/Stage1';
+import Stage2 from './Verification/Stage2';
+import Stage3 from './Verification/Stage3';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,6 +25,8 @@ const router = createBrowserRouter(
       <Route path="/privacy" element={<Privacy />}/>
       <Route path="/verification" element={<Stage0 />}/>
       <Route path="/verification/stage1" element={<Stage1 />}/>
+      <Route path="/verification/stage2" element={<Stage2 />}/>
+      <Route path="/verification/stage3" element={<Stage3 />}/>
     </>
   ), { basename: import.meta.env.DEV ? '/' : '/announcerw/' }
 );

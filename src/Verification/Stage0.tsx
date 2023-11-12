@@ -1,6 +1,6 @@
 import { Button } from "@/Components/ui/button";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function generateRandomString() {
 	let randomString = '';
@@ -16,11 +16,18 @@ function generateRandomString() {
 export default function Stage0() {
     const [isLoading, setLoading] = useState(false);
 
+    useEffect(() => {
+        localStorage.removeItem('tk_discord')
+        localStorage.removeItem('tk_robloxa')
+        localStorage.removeItem('tk_robloxr')
+        localStorage.removeItem('oauth-state')
+    }, [])
+
     function getstarted() {
         setLoading(true)
         const randomString = generateRandomString();
 		localStorage.setItem('oauth-state', randomString);
-        document.location.href = 'https://discord.com/api/oauth2/authorize?client_id=1172662931121504276&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fverification%2Fstage1&response_type=token&scope=identify&state='+btoa(randomString);
+        document.location.href = `https://discord.com/api/oauth2/authorize?client_id=1172662931121504276&redirect_uri=${import.meta.env.VITE_URL+'verification/stage1'}&response_type=token&scope=identify&state=`+btoa(randomString);
     }
 
     return (

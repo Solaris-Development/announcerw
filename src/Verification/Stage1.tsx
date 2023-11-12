@@ -24,9 +24,6 @@ export default function Stage1() {
         (async () => {
             const fragment = new URLSearchParams(window.location.hash.slice(1));
             const [accessToken, tokenType, state] = [fragment.get('access_token'), fragment.get('token_type'), fragment.get('state')];
-            
-            console.log(state)
-            console.log(localStorage.getItem('oauth-state'))
 
             if (!accessToken || !tokenType || !state)
                 return redirect('/verification')
@@ -41,11 +38,29 @@ export default function Stage1() {
             setLoaded(true)
         })()
     }, [])
+    
+    function authorize() {
+        setLoading(true)
+        const fragment2 = new URLSearchParams(window.location.hash.slice(1));
+        localStorage.setItem('tk_discord', fragment2.get('token_type') + ' ' + fragment2.get('access_token'))
+
+        const fragment = new URLSearchParams(window.location.hash.slice(1))
+        const state: any = fragment.get('state')
+
+        const url = new URL("https://apis.roblox.com/oauth/v1/authorize")
+        url.searchParams.set("client_id", import.meta.env.VITE_RBXCLIENTID.toString())
+        url.searchParams.set("redirect_uri", import.meta.env.VITE_URL+"verification/stage2")
+        url.searchParams.set("scope", "openid profile")
+        url.searchParams.set("response_type", "code")
+        url.searchParams.set("state", state)
+
+        document.location.href = url.toString();
+    }
 
     return (
         <div className="h-full flex items-center justify-center">
             <div className="min-w-[28rem] w-[28rem] h-[50%] border border-border bg-background rounded-lg p-5 flex items-center flex-col relative">
-                <h2>Solaris Verification Process</h2>
+                <h2>Discord Account</h2>
                 
                 <div className="w-full h-[calc(100%-77px)] flex items-center justify-center flex-col">
                 <MSuspense fallback={
@@ -60,16 +75,13 @@ export default function Stage1() {
                 <div className="absolute bottom-0 m-5 space-x-5">
                     { loaded && <>
                         <Button disabled={isLoading} variant={'ghost'} onClick={() => redirect('/verification')}>Change Account</Button>
-                        <Button disabled={isLoading}>
+                        <Button disabled={isLoading} onClick={() => authorize()}>
                             { isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" /> } 
                             Continue
                         </Button>
                     </> }
-                    
-                    
                 </div>
                 
-
                 <AlertDialog open={err}>
                     <AlertDialogContent>
                         <AlertDialogHeader>
