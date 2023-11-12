@@ -40,8 +40,7 @@ export default function Stage3() {
             )
             //const url = import.meta.env.VITE_APIURL+"verification/finish?rbx="+btoa(localStorage.getItem('tk_robloxr')!)+"&dsc="+btoa(localStorage.getItem('tk_discord')!)
             
-            var vUrl = new URL(import.meta.env.VITE_APIURL+"verification/finish")
-            vUrl.searchParams.set('dsc', localStorage.getItem('tk_discord')!)
+            var vUrl = new URL(import.meta.env.VITE_APIURL+"verification/finish/?dsc="+localStorage.getItem('tk_discord')!)
             vUrl.searchParams.set('rbx', localStorage.getItem('tk_robloxr')!)
             const f0 = await ApiGet(vUrl.toString())
             if (!f0.ok) {
