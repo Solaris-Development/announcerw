@@ -34,11 +34,11 @@ export default function Stage2() {
 
             var tf0
             if (!localStorage.getItem('tk_robloxa') || !localStorage.getItem('tk_robloxr')) {
-                tf0 = await ApiGet(import.meta.env.VITE_APIURL+"verification/exchange?code="+code)
+                tf0 = await ApiGet(import.meta.env.VITE_APIURL+"verification/exchange?code="+code, { cache: 'no-cache' })
                 if (!tf0.ok)
                     return setErr(true)
             } else {
-                tf0 = await ApiGet(import.meta.env.VITE_APIURL+"verification/refresh?code="+localStorage.getItem('tk_robloxr'))
+                tf0 = await ApiGet(import.meta.env.VITE_APIURL+"verification/refresh?code="+localStorage.getItem('tk_robloxr'), { cache: 'no-cache' })
                 if (!tf0.ok)
                     return setErr(true)
             }

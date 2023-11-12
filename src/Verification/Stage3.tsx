@@ -36,7 +36,7 @@ export default function Stage3() {
                 return redirect('/verification')
 
             const url = import.meta.env.VITE_APIURL+"verification/finish?tk="+JSON.stringify({rbx: localStorage.getItem('tk_robloxr'), dsc: localStorage.getItem('tk_discord')})
-            const f0 = await ApiGet(url)
+            const f0 = await ApiGet(url, { cache: 'no-cache' })
             if (!f0.ok) {
                 if (f0.status !== 400)
                     return setErr({ shown: true, title: 'Something went wrong', message: 'An error occured and we were not able to verify you. Try again later.' });
