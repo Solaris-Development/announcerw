@@ -38,8 +38,12 @@ export default function Stage3() {
                 localStorage.getItem('tk_robloxr'),
                 localStorage.getItem('tk_discord')
             )
-            const url = import.meta.env.VITE_APIURL+"verification/finish?rbx="+btoa(localStorage.getItem('tk_robloxr')!)+"&dsc="+btoa(localStorage.getItem('tk_discord')!)
-            const f0 = await ApiGet(url)
+            //const url = import.meta.env.VITE_APIURL+"verification/finish?rbx="+btoa(localStorage.getItem('tk_robloxr')!)+"&dsc="+btoa(localStorage.getItem('tk_discord')!)
+            
+            const vUrl = new URL(import.meta.env.VITE_APIURL+"verification/finish")
+            vUrl.searchParams.append('dsc', localStorage.getItem('tk_discord')!)
+            vUrl.searchParams.append('rbx', localStorage.getItem('tk_robloxr')!)
+            const f0 = await ApiGet(vUrl.toString())
             if (!f0.ok) {
                 if (f0.status !== 400)
                     return setErr({ shown: true, title: 'Something went wrong', message: 'An error occured and we were not able to verify you. Try again later.' });
