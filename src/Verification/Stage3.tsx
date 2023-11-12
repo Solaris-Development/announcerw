@@ -34,10 +34,6 @@ export default function Stage3() {
 
             if (!localStorage.getItem('tk_discord') || !localStorage.getItem('tk_robloxr'))
                 return redirect('/verification')
-            console.log(
-                localStorage.getItem('tk_robloxr'),
-                localStorage.getItem('tk_discord')
-            )
 
             const url = import.meta.env.VITE_APIURL+"verification/finish?tk="+JSON.stringify({rbx: localStorage.getItem('tk_robloxr'), dsc: localStorage.getItem('tk_discord')})
             const f0 = await ApiGet(url)
@@ -60,6 +56,12 @@ export default function Stage3() {
             setUserr(f.rbx)
             setUserd(f.dsc)
             setLoaded(true)
+
+            // Cleanup
+            localStorage.removeItem('tk_discord')
+            localStorage.removeItem('tk_robloxa')
+            localStorage.removeItem('tk_robloxr')
+            localStorage.removeItem('oauth-state')
         })()
     }, [])
 
