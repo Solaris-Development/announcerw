@@ -12,6 +12,7 @@ import {
 import { Link, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ApiGet } from "@/Lib/ApiGet";
 
 export default function Stage3() {
     const [loaded, setLoaded] = useState(false);
@@ -37,7 +38,7 @@ export default function Stage3() {
                 rbx: localStorage.getItem('tk_robloxr'),
                 dsc: localStorage.getItem('tk_discord')
             })
-            const f0 = await fetch(import.meta.env.VITE_APIURL+"verification/finish", {
+            const f0 = await ApiGet(import.meta.env.VITE_APIURL+"verification/finish", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -50,7 +51,7 @@ export default function Stage3() {
             if (!f0.ok) {
                 if (f0.status !== 400)
                     return setErr({ shown: true, title: 'Something went wrong', message: 'An error occured and we were not able to verify you. Try again later.' });
-                const f = await f0.json()
+                const f = JSON.parse(f0.body)
                 if (!f.id)
                     return setErr({ shown: true, title: 'Something went wrong', message: 'An error occured and we were not able to verify you. Try again later.\nError code: '+f.message });
                 switch (f.id) {
@@ -62,7 +63,7 @@ export default function Stage3() {
                         return redirect('/verification')
                 }
             }
-            const f = await f0.json()
+            const f = JSON.parse(f0.body)
             setUserr(f.rbx)
             setUserd(f.dsc)
             setLoaded(true)

@@ -12,6 +12,7 @@ import {
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ApiGet } from "@/Lib/ApiGet";
 
 export default function Stage2() {
     const [loaded, setLoaded] = useState(false);
@@ -33,15 +34,15 @@ export default function Stage2() {
 
             var tf0
             if (!localStorage.getItem('tk_robloxa') || !localStorage.getItem('tk_robloxr')) {
-                tf0 = await fetch(import.meta.env.VITE_APIURL+"verification/exchange?code="+code)
+                tf0 = await ApiGet(import.meta.env.VITE_APIURL+"verification/exchange?code="+code)
                 if (!tf0.ok)
                     return setErr(true)
             } else {
-                tf0 = await fetch(import.meta.env.VITE_APIURL+"verification/refresh?code="+localStorage.getItem('tk_robloxr'))
+                tf0 = await ApiGet(import.meta.env.VITE_APIURL+"verification/refresh?code="+localStorage.getItem('tk_robloxr'))
                 if (!tf0.ok)
                     return setErr(true)
             }
-            const tf = await tf0.json()
+            const tf = JSON.parse(tf0.body)
             
             localStorage.setItem('tk_robloxa', `${tf.token_type} ${tf.access_token}`)
             localStorage.setItem('tk_robloxr', tf.refresh_token)
