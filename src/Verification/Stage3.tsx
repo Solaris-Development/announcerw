@@ -34,20 +34,11 @@ export default function Stage3() {
 
             if (!localStorage.getItem('tk_discord') || !localStorage.getItem('tk_robloxr'))
                 return redirect('/verification')
-            console.log({
-                rbx: localStorage.getItem('tk_robloxr'),
-                dsc: localStorage.getItem('tk_discord')
-            })
-            const f0 = await ApiGet(import.meta.env.VITE_APIURL+"verification/finish", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    rbx: localStorage.getItem('tk_robloxr'),
-                    dsc: localStorage.getItem('tk_discord')
-                })
-            })
+
+            const vUrl = new URL(import.meta.env.VITE_APIURL+"verification/finish")
+            vUrl.searchParams.set('rbx', localStorage.getItem('tk_robloxr')!)
+            vUrl.searchParams.set('dsc', localStorage.getItem('tk_discord')!)
+            const f0 = await ApiGet(vUrl.toString())
             if (!f0.ok) {
                 if (f0.status !== 400)
                     return setErr({ shown: true, title: 'Something went wrong', message: 'An error occured and we were not able to verify you. Try again later.' });
