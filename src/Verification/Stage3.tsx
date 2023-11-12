@@ -39,7 +39,7 @@ export default function Stage3() {
                 localStorage.getItem('tk_discord')
             )
 
-            const url = import.meta.env.VITE_APIURL+"verification/finish?rbx="+localStorage.getItem('tk_robloxr')+"?dsc="+localStorage.getItem('tk_discord')
+            const url = import.meta.env.VITE_APIURL+"verification/finish?tk="+JSON.stringify({rbx: localStorage.getItem('tk_robloxr'), dsc: localStorage.getItem('tk_discord')})
             const f0 = await ApiGet(url)
             if (!f0.ok) {
                 if (f0.status !== 400)
