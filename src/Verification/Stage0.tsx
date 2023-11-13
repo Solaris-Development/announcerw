@@ -1,5 +1,6 @@
 import { Button } from "@/Components/ui/button";
-import { Loader2 } from "lucide-react";
+import { getDiscordOAuth } from "@/Lib/Utils";
+import { ArrowRight, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 function generateRandomString() {
@@ -27,19 +28,28 @@ export default function Stage0() {
         setLoading(true)
         const randomString = generateRandomString();
 		localStorage.setItem('oauth-state', randomString);
-        document.location.href = `https://discord.com/api/oauth2/authorize?client_id=1172662931121504276&redirect_uri=${import.meta.env.VITE_URL+'verification/stage1'}&response_type=token&scope=identify&state=`+btoa(randomString);
+        document.location.href = getDiscordOAuth(btoa(randomString));
     }
 
     return (
         <div className="h-full flex items-center justify-center">
-            <div className="min-w-[28rem] w-[28rem] h-[30%] border border-border bg-background rounded-lg p-5 flex items-center flex-col relative">
-                <h2>Solaris Verification Process</h2>
-                <p className="text-muted-foreground">Welcome to the verification process.</p>
-                <p className="w-96 text-center mt-5">We need you to connect your Roblox and Discord account to continue.</p>
-                <Button className="absolute bottom-0 m-5 " onClick={() => getstarted()} disabled={isLoading}>
-                    { isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" /> } 
-                    Get Started
-                </Button>
+            <div className="min-w-[50rem] w-[50rem] h-[20rem] min-h-[20rem] border border-border bg-background rounded-lg flex items-center flex-col relative">
+                <div className="p-2 w-full border-b-border border-b">
+                    <h4>Account Link • Welcome</h4>
+                </div>
+                <div className="p-5 h-full w-full text-center flex justify-center items-center flex-col">
+                    <h4>Welcome!</h4>
+                    <p>We need you to verify your identity.</p>
+                    <p>Let's get started.</p>
+                </div>
+                <div className="w-full relative h-36">
+                    <div className="absolute right-0 bottom-0">
+                        <Button className="m-5" onClick={() => getstarted()} disabled={isLoading}>
+                            Get Started
+                            { isLoading ? <Loader2 className="ml-2 h-4 w-4 animate-spin" /> : <ArrowRight className="ml-2 h-4 w-4" /> } 
+                        </Button>
+                    </div>
+                </div>  
             </div>
         </div>
     )
